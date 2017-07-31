@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="0.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NotNullOrEmptySample\NotNullOrEmptySample.csproj" />
+  </ItemGroup>
+</Project>
