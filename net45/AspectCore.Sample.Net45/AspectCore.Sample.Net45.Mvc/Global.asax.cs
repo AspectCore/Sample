@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Autofac;
+using AspectCore.Configuration;
 using AspectCore.Extensions.Autofac;
-using AspectCore.Extensions.Configuration;
-using Autofac.Integration.Mvc;
-using AspectCore.Sample.Net45.Mvc.Services;
 using AspectCore.Sample.Net45.Mvc.Interceptors;
+using AspectCore.Sample.Net45.Mvc.Services;
+using Autofac;
+using Autofac.Integration.Mvc;
 
 namespace AspectCore.Sample.Net45.Mvc
 {
@@ -31,12 +27,12 @@ namespace AspectCore.Sample.Net45.Mvc
             builder.RegisterType<CustomeService>().As<ICustomService>().InstancePerDependency();
 
             //注册Mvc Controller的动态代理
-            builder.RegisterControllers(typeof(MvcApplication).Assembly).AsClassProxy();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             //注册AspectCore
-            builder.RegisterAspectCore(config=>
+            builder.RegisterDynamicProxy(config=>
             {
-                config.InterceptorFactories.AddTyped<ExtensibleActionInterceptorAttribute>();
+                config.Interceptors.AddTyped<ExtensibleActionInterceptorAttribute>(Predicates.ForService("*Controller"));
             });
 
             var container = builder.Build();
